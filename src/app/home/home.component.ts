@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     // Disable content filtering because if you use full page mode, you probably
     // want to  freely enter any HTML content in source mode without any limitations.
     allowedContent: true,
-    height: 'height: calc(100vh - 20rem);',
+    height: 'calc(100vh - 20rem)',
     removeButtons: 'PasteFromWord'
   }
 
@@ -67,11 +67,13 @@ export class HomeComponent implements OnInit {
           this.dataHtml = r
         }
       )
-      // this.appService.getContentTest().subscribe(
-      //   r => {
-      //     this.dataHtml = r
-      //   }
-      // )
+      this.appService.getContentTest().subscribe(
+        r => {
+          if(!this.dataHtml) {
+            this.dataHtml = r
+          }
+        }
+      )
     }
   }
 
