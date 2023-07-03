@@ -62,11 +62,16 @@ export class HomeComponent implements OnInit {
   setEditFileAble(v: boolean) {
     this.editFileAble = v
     if(v) {
-      this.appService.getContentTest().subscribe(
+      this.appService.upload(this.fileObj).subscribe(
         r => {
           this.dataHtml = r
         }
       )
+      // this.appService.getContentTest().subscribe(
+      //   r => {
+      //     this.dataHtml = r
+      //   }
+      // )
     }
   }
 
