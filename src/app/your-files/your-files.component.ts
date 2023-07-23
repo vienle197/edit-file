@@ -3,6 +3,8 @@ import {finalize, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {AppService} from "../services/app.service";
 import {ToastrService} from "ngx-toastr";
+import {ModalViewFileComponent} from "../modal-view-file/modal-view-file.component";
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-your-files',
@@ -22,7 +24,8 @@ export class YourFilesComponent implements OnInit , OnDestroy {
   constructor(
     private appService: AppService,
     private toast: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NzModalService
   ) { }
 
   ngOnDestroy() {
@@ -56,5 +59,18 @@ export class YourFilesComponent implements OnInit , OnDestroy {
         e => this.toast.error('Có lỗi xảy ra!')
       )
     this.formSearch.valueChanges.subscribe(() => this.formPaging.patchValue({page: 1}))
+  }
+  viewFile(id) {
+    this.modalService.create({
+      nzTitle: 'Modal Title',
+      nzContent: ModalViewFileComponent,
+      nzComponentParams: {
+        idFile: id
+      },
+      nzWidth: 'auto',
+      nzBodyStyle: {'max-width': '100vw'},
+      nzStyle: { top: '20px' },
+      nzFooter: null
+    });
   }
 }

@@ -36,6 +36,7 @@ import {YourFilesComponent} from "./your-files/your-files.component";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {NzTagModule} from "ng-zorro-antd/tag";
 import {NzCardModule} from "ng-zorro-antd/card";
+import {ModalViewFileComponent} from "./modal-view-file/modal-view-file.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {NzCardModule} from "ng-zorro-antd/card";
     BlankComponent,
     FilesCustomerComponent,
     CustomerFullComponent,
-    YourFilesComponent
+    YourFilesComponent,
+    ModalViewFileComponent
   ],
   imports: [
     BrowserModule,

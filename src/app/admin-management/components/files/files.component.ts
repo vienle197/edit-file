@@ -1,8 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppService} from "../../../services/app.service";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {finalize, startWith, Subject, switchMap, takeUntil} from "rxjs";
+import {NzModalService} from "ng-zorro-antd/modal";
+import {ModalViewFileComponent} from "../../../modal-view-file/modal-view-file.component";
 
 @Component({
   selector: 'app-files',
@@ -38,7 +40,8 @@ export class FilesComponent implements OnInit, OnDestroy {
   constructor(
     private appService: AppService,
     private toast: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NzModalService
   ) { }
 
   ngOnDestroy() {
@@ -114,5 +117,19 @@ export class FilesComponent implements OnInit, OnDestroy {
         },
         e => this.toast.error('Xoá file thất bại!')
       )
+  }
+
+  viewFile(id) {
+    this.modalService.create({
+      nzTitle: 'Modal Title',
+      nzContent: ModalViewFileComponent,
+      nzComponentParams: {
+        idFile: id
+      },
+      nzWidth: 'auto',
+      nzBodyStyle: {'max-width': '100vw'},
+      nzStyle: { top: '20px' },
+      nzFooter: null
+    });
   }
 }

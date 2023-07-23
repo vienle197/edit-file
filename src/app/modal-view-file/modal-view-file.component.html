@@ -1,0 +1,8 @@
+<div>
+  <div [hidden]="!loadingViewFile">
+    <div class="text-center" style="line-height: 200px">
+      <span nz-icon class="icon-extra" [nzType]="'loading'"></span>
+    </div>
+  </div>
+  <iframe #invoicePreview class="preview-template border-0 shadow" [hidden]="loadingViewFile"></iframe>
+</div>

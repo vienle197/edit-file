@@ -31,6 +31,8 @@
     <td>
       <a (click)="removeFile(data)" *ngIf="!data.removing">Xoá file</a>
       <a *ngIf="data.removing">Đang xoá</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a href="javascript: void(0)" (click)="viewFile(data.id)">Xem file</a>
     </td>
   </tr>
   </tbody>
