@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
-import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from "./app.routing";
 import {CKEditorModule} from "ckeditor4-angular";
 import {EditComponent} from './edit/edit.component';
@@ -41,7 +40,6 @@ import {NzCardModule} from "ng-zorro-antd/card";
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     EditComponent,
     DragDropFileUploadDirective,
     FullComponent,

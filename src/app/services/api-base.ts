@@ -92,36 +92,36 @@ export abstract class ApiServiceBase {
     return new HttpHeaders(options)
   }
 
-  protected makeGetRequest(url: string, options?: HttpGetOption, hideError = false, redirectNotFound = false): Observable<ResponseAPI> {
+  protected makeGetRequest(url: string, options?: HttpGetOption, hideError = false, redirectNotFound = false): Observable<ResponseAPI|any|any[]>{
     return this._http.get(url, {
       headers: ApiServiceBase.createHeader(options?.noAuthorization, hideError, redirectNotFound),
       params: ApiServiceBase.encodeParams(options?.params),
       responseType: options?.responseType
-    }) as Observable<ResponseAPI|any>
+    }) as Observable<ResponseAPI|any|any[]>
   }
 
-  protected makeGetRequestOr404(url: string, options?: HttpGetOption): Observable<ResponseAPI> {
+  protected makeGetRequestOr404(url: string, options?: HttpGetOption): Observable<ResponseAPI|any|any[]>{
     return this.makeGetRequest(url, options, true, true)
   }
 
-  protected makePatchRequest(url: string, options?: HttpPatchOption, hideError = false): Observable<ResponseAPI> {
+  protected makePatchRequest(url: string, options?: HttpPatchOption, hideError = false): Observable<ResponseAPI|any|any[]>{
     return this._http.patch(url, options?.data, {
       headers: ApiServiceBase.createHeader(options?.noAuthorization, hideError),
       params: ApiServiceBase.encodeParams(options?.params),
-    }) as Observable<ResponseAPI|any>
+    }) as Observable<ResponseAPI|any|any[]>
   }
 
-  protected makePostRequest(url: string, options?: HttpPostOption): Observable<ResponseAPI> {
+  protected makePostRequest(url: string, options?: HttpPostOption): Observable<ResponseAPI|any|any[]>{
     return this._http.post(url, options?.data, {
       headers: ApiServiceBase.createHeader(options?.noAuthorization),
       params: options?.params
-    }) as Observable<ResponseAPI|any>
+    }) as Observable<ResponseAPI|any|any[]>
   }
 
-  protected makeDeleteRequest(url: string, options?: HttpDeleteOption): Observable<ResponseAPI> {
+  protected makeDeleteRequest(url: string, options?: HttpDeleteOption): Observable<ResponseAPI|any|any[]>{
     return this._http.delete(url, {
       headers: ApiServiceBase.createHeader(options?.noAuthorization),
       params: options?.params
-    }) as Observable<ResponseAPI|any>
+    }) as Observable<ResponseAPI|any|any[]>
   }
 }

@@ -17,11 +17,15 @@ export class AppService extends ApiServiceBase{
   }
 
   removeFile(id) {
-    return this.makeDeleteRequest(this.API_URL + '/file/' + id) as Observable<any>
+    // return this.makeDeleteRequest(this.API_URL + '/user/file/' + id) as Observable<any>
+    return this._http.delete(this.API_URL + '/user/file/' + id) as Observable<any>
   }
 
   getListFilesCustomer(params: any= {}) {
-    return this.makeGetRequest(this.API_URL + '/file-stores-customer', {params, noAuthorization: true}) as Observable<any>
+    return this.makeGetRequest(this.API_URL + '/file-stores-customer', {params: {
+        ...params,
+        phone: params?.phone || ''
+      }, noAuthorization: true}) as Observable<any>
   }
 
   uploadFile(data: FormData) {
@@ -41,6 +45,10 @@ export class AppService extends ApiServiceBase{
 
   createUser(data) {
     return this.makePostRequest(this.API_URL + '/admin/create-user', {data})
+  }
+
+  getUsers(data): Observable<any[]> {
+    return this.makePostRequest(this.API_URL + '/admin/users', {data}) as Observable<any[]>
   }
 
 }

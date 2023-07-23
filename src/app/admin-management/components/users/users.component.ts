@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppService} from "../../../services/app.service";
 import {ToastrService} from "ngx-toastr";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {finalize, Subject} from "rxjs";
+import {finalize, startWith, Subject, switchMap, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-users',
@@ -47,6 +47,28 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.formSearch = this.fb.group({
+    })
+    this.formPaging.valueChanges
+      .pipe(
+        startWith(this.formPaging.value),
+        takeUntil(this.destroy$),
+        switchMap(
+          paging => {
+            this.loading = true
+            return this.appService.getUsers({
+              ...paging,
+              ...this.formSearch.value
+            }).pipe(finalize(() => this.loading = false))
+          }
+        )
+      )
+      .subscribe(
+        res => {
+          this.listOfData = res
+        },
+        e => this.toast.error('Có lỗi xảy ra!')
+      )
   }
 
   submit() {
@@ -61,6 +83,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         () => {
           this.toast.success('Thêm mới thành công')
           this.isVisibleModal = false
+          this.formPaging.patchValue({page: 1})
         },
         () => this.toast.error('Thêm mới thất bại'),
       )
