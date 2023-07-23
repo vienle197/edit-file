@@ -1,0 +1,34 @@
+<nz-card class="m-3 bg-white">
+  <div class="d-flex justify-content-between mb-2">
+    <h4>Danh sách files của bạn</h4>
+    <div [formGroup]="formSearch">
+      <input class="form-control" placeholder="Tìm kiếm số điện thoại" formControlName="phone">
+    </div>
+  </div>
+  <nz-table #basicTable [nzData]="listOfData" [nzLoading]="loading">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Số điện thoại</th>
+      <th>Tên file</th>
+      <th>Người tải lên</th>
+      <!--    <th [nzWidth]="'50'">Hành động</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.id }}</td>
+      <td>{{ data.phone }}</td>
+      <td>{{ data.name }}</td>
+      <td>
+        <nz-tag [nzColor]="'green'" *ngIf="data.isCustomer">Khách hàng</nz-tag>
+        <nz-tag [nzColor]="'red'" *ngIf="!data.isCustomer">Admin</nz-tag>
+      </td>
+      <!--    <td>-->
+      <!--      <a><i nz-icon nzType="delete"></i></a>-->
+      <!--    </td>-->
+    </tr>
+    </tbody>
+  </nz-table>
+
+</nz-card>

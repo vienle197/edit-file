@@ -1,24 +1,46 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from '../../environments/environment';
+import {ApiServiceBase} from "./api-base";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
-  baseUrl = environment.api
-  constructor(
-    private _http: HttpClient
-  ) { }
+export class AppService extends ApiServiceBase{
 
-  getContentTest() {
+  getContentTest(s?: any) {
     return this._http.get('/assets/temp/test.html', {responseType: "text"})
   }
 
-  upload(file) {
-    const form = new FormData()
-    form.set('multipartFile', file)
-    return this._http.post(this.baseUrl + '/process', form, {responseType: "text"})
+  getListFiles(params: any= {}) {
+    return this.makeGetRequest(this.API_URL + '/file-stores', {params}) as Observable<any>
+  }
+
+  removeFile(id) {
+    return this.makeDeleteRequest(this.API_URL + '/file/' + id) as Observable<any>
+  }
+
+  getListFilesCustomer(params: any= {}) {
+    return this.makeGetRequest(this.API_URL + '/file-stores-customer', {params, noAuthorization: true}) as Observable<any>
+  }
+
+  uploadFile(data: FormData) {
+    return this.makePostRequest(this.API_URL + '/user/save-file', {data})
+  }
+  customerUploadFile(data: FormData) {
+    return this.makePostRequest(this.API_URL + '/save-file-customer', {data})
+  }
+
+  getContentFile(id: string) {
+    return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
+  }
+
+  changePassword(data) {
+    return this.makePostRequest(this.API_URL + '/user/update-password', {data})
+  }
+
+  createUser(data) {
+    return this.makePostRequest(this.API_URL + '/admin/create-user', {data})
   }
 
 }

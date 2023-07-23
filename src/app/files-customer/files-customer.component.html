@@ -1,0 +1,75 @@
+<div class="inner-content m-3">
+  <div>
+    <h2 class="text-center mb-5">Bạn muốn thiết kế gì hôm nay?</h2>
+  </div>
+  <div class="gutter-example">
+    <div nz-row [nzGutter]="[16, 16]">
+      <ng-container *ngIf="loading">
+        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+          <div class="grid-config loading">
+            <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+          <div class="grid-config loading">
+            <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+          <div class="grid-config loading">
+            <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!loading">
+        <div nz-col class="gutter-row" [nzSpan]="24 / 6" *ngFor="let item of listOfData">
+          <div class="grid-config" (click)="showModal(item)">
+            <img src="assets/images/logo.png" />
+            <div class="info-file">
+              {{item.name}}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<nz-modal [(nzVisible)]="isVisibleUpload" nzTitle="Chỉnh sửa file" nzWidth="100vw"
+          [nzCancelLoading]="uploading"
+          [nzOkLoading]="uploading"
+          [nzOkText]="'Chốt file'"
+          [nzCancelText]="'Huỷ'" [nzBodyStyle]="{height: 'calc(100vh - 15rem)'}"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="submitFile()">
+  <ng-container *nzModalContent>
+    <ng-container *ngIf="!gettingFile;else loadingTpl">
+      <div class="row">
+        <div class="col-8">
+          <ng-container  [ngTemplateOutlet]="templateEdit"></ng-container>
+        </div>
+        <div class="col-4" [formGroup]="formInfo">
+          <h4>Thông tin khách hàng</h4>
+          <div class="form-group">
+            <label>Số điện thoại <span class="text-danger">*</span></label>
+            <input formControlName="phone" class="form-control"
+                   [class.is-invalid]="(formInfo.get('phone').dirty || formInfo.get('phone').touched) && formInfo.get('phone').errors"
+                   [class.is-valid]="(formInfo.get('phone').dirty || formInfo.get('phone').touched) && !formInfo.get('phone').errors">
+          </div>
+<!--          <div class="form-group">-->
+<!--            <label>Kích thước yêu cầu</label>-->
+<!--            <input formControlName="dimension" class="form-control"-->
+<!--                   [class.is-invalid]="(formInfo.get('dimension').dirty || formInfo.get('dimension').touched) && formInfo.get('dimension').errors"-->
+<!--                   [class.is-valid]="(formInfo.get('dimension').dirty || formInfo.get('dimension').touched) && !formInfo.get('dimension').errors">-->
+<!--          </div>-->
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</nz-modal>
+<ng-template #templateEdit>
+  <ckeditor id="editor-pdf" #editor1 [data]="dataHtml" [config]="configCkeditor"></ckeditor>
+</ng-template>
+<ng-template #loadingTpl>
+  <div class="text-center" style="line-height: 200px">
+    <span nz-icon class="icon-extra" [nzType]="'loading'"></span>
+  </div>
+</ng-template>

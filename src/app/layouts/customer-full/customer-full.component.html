@@ -1,0 +1,33 @@
+<nz-layout>
+  <nz-header>
+    <ul nz-menu nzMode="horizontal" nzTheme="dark">
+      <li nz-menu-item>
+        <div class="logo">
+          <img src="/assets/images/logo.png">
+        </div>
+      </li>
+      <li nz-menu-item [nzSelected]="pathActive == '/'" routerLink="/" routerLinkActive="/">
+        <div class="d-flex align-items-center">
+          <span nz-icon nzType="home" class="pe-1"></span>
+          Trang chủ
+        </div>
+      </li>
+      <li nz-menu-item nzMatchRouter routerLink="/your-files" routerLinkActive="/your-files">
+        <div class="d-flex align-items-center">
+          <span nz-icon nzType="file-pdf" class="pe-1"></span>
+          File của bạn
+        </div>
+      </li>
+      <li nz-menu-item nzMatchRouter routerLink="/about" routerLinkActive="/about">
+        <div class="d-flex align-items-center">
+          <span nz-icon nzType="info-circle" class="pe-1"></span>
+          Về chúng tôi
+        </div>
+      </li>
+    </ul>
+  </nz-header>
+  <nz-content>
+    <router-outlet></router-outlet>
+  </nz-content>
+  <nz-footer>Copyright ©2023 PDF</nz-footer>
+</nz-layout>

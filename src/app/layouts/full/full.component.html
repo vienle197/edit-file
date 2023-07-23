@@ -1,0 +1,66 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar"
+            nzCollapsible
+            nzWidth="256px"
+            nzBreakpoint="md"
+            [(nzCollapsed)]="isCollapsed"
+            [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="/">
+        <img src="/assets/images/logo.png" alt="logo">
+        <h1>Pdf editor</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Quản lý file' : ''"
+        nzMatchRouter [routerLinkActive]="'/'+adminPath+'/files'" [routerLink]="'/'+adminPath+'/files'"
+      >
+        <span nz-icon nzType="file-pdf"></span>
+        <span>Quản lý file</span>
+      </li>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'File của khách' : ''"
+        nzMatchRouter [routerLinkActive]="'/'+adminPath+'/customer-files'" [routerLink]="'/'+adminPath+'/customer-files'"
+      >
+        <span nz-icon nzType="shopping-cart"></span>
+        <span>File của khách</span>
+      </li>
+      <li nz-submenu nzTitle="Cấu hình" nzIcon="setting">
+        <ul>
+          <li nz-menu-item [nzTooltipTitle]="isCollapsed ? 'Quản lý người dùng' : ''"
+              nz-tooltip
+              nzMatchRouter [routerLinkActive]="'/'+adminPath+'/users'" [routerLink]="'/'+adminPath+'/users'">
+            <a>Quản lý người dùng</a>
+          </li>
+          <li nz-menu-item [nzTooltipTitle]="isCollapsed ? 'Đổi mật khẩu' : ''"
+              nz-tooltip
+              nzMatchRouter [routerLinkActive]="'/'+adminPath+'/change-password'" [routerLink]="'/'+adminPath+'/change-password'">
+            <a>Đổi mật khẩu</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="text-center" [class.ps-4]="!isCollapsed" [class.text-center]="isCollapsed">
+      <span class="text-white" (click)="isCollapsed = !isCollapsed">
+            <span class="trigger"
+                  nz-icon
+                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            ></span>
+        </span>
+    </div>
+  </nz-sider>
+  <nz-layout>
+    <nz-content>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

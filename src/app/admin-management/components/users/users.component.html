@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between">
+  <h4>Danh sách người dùng</h4>
+  <div>
+    <button nz-button nzType="primary" class="d-flex align-items-center" (click)="showModal()" nzShape="round" [nzLoading]="submitting">
+      <span nz-icon [nzType]="'plus'"></span>
+      Tạo mới
+    </button>
+  </div>
+</div>
+<nz-table #basicTable [nzData]="listOfData" [nzLoading]="loading">
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Username</th>
+    <th [nzWidth]="'50'">Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{ data.id }}</td>
+    <td>{{ data.phone }}</td>
+    <td>
+      <a><i nz-icon nzType="edit"></i></a>
+      <nz-divider></nz-divider>
+      <a><i nz-icon nzType="delete"></i></a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-modal [(nzVisible)]="isVisibleModal" nzTitle="Tạo mới người dùng"
+          [nzCancelLoading]="submitting"
+          [nzOkLoading]="submitting"
+          [nzOkText]="'Tạo mới'"
+          [nzCancelText]="'Huỷ'"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="submit()">
+  <ng-container *nzModalContent>
+    <div [formGroup]="formCreate">
+      <div class="form-outline mb-4">
+        <label class="form-label" for="form3Example3">Tài khoản</label>
+        <input type="text" formControlName="phone" id="form3Example3" class="form-control form-control-lg"
+               [class.is-invalid]="(formCreate.controls.phone.touched || formCreate.controls.phone.dirty) && formCreate.controls.phone.errors"
+               [class.is-valid]="(formCreate.controls.phone.touched || formCreate.controls.phone.dirty) && !formCreate.controls.phone.errors"
+               placeholder="Nhập tài khoản" />
+      </div>
+
+      <!-- Password input -->
+      <div class="form-outline mb-3">
+        <label class="form-label" for="form3Example4">Mật khẩu</label>
+        <input type="password" formControlName="password" id="form3Example4" class="form-control form-control-lg"
+               [class.is-invalid]="(formCreate.controls.password.touched || formCreate.controls.password.dirty) && formCreate.controls.password.errors"
+               [class.is-valid]="(formCreate.controls.password.touched || formCreate.controls.password.dirty) && !formCreate.controls.password.errors"
+               placeholder="Nhập mật khẩu" />
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
