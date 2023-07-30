@@ -1,8 +1,24 @@
-<div>
-  <div [hidden]="!loadingViewFile">
-    <div class="text-center" style="line-height: 200px">
-      <span nz-icon class="icon-extra" [nzType]="'loading'"></span>
+
+<nz-card class="mx-4 mt-2">
+  <div class="row">
+    <div class="col-6" style="text-align: right">
+      <div>
+        <div [hidden]="!loadingViewFile">
+          <div class="text-center" style="line-height: 200px">
+            <span nz-icon class="icon-extra" [nzType]="'loading'"></span>
+          </div>
+        </div>
+        <iframe #invoicePreview [width]="w" [height]="h" class="border-0 shadow" [hidden]="loadingViewFile"></iframe>
+      </div>
+    </div>
+    <div class="col-6">
+      <h3>Thông tin khách hàng</h3>
+      <h4>
+        Sđt: <strong>{{fileInfo?.phone}}</strong>
+      </h4>
+      <h4>
+        Kích thước: <strong>{{fileInfo?.width}} x {{fileInfo?.height}}</strong>
+      </h4>
     </div>
   </div>
-  <iframe #invoicePreview class="preview-template border-0 shadow" [hidden]="loadingViewFile"></iframe>
-</div>
+</nz-card>
