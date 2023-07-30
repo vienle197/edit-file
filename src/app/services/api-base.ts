@@ -81,7 +81,7 @@ export abstract class ApiServiceBase {
     let options = {}
     const token =localStorage.getItem(LocalStorageEnum.ACCESS_TOKEN_KEY)
     if (!noAuthorization && token) {
-      options = { ...options, Authorization: token}
+      options = { ...options, Authorization: 'Bearer ' + token}
     }
     if(hideError) {
       options = { ...options, hideError: '1' }

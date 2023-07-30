@@ -8,8 +8,8 @@ import {Observable} from "rxjs";
 })
 export class AppService extends ApiServiceBase{
 
-  getContentTest(s?: any) {
-    return this._http.get('/assets/temp/test.html', {responseType: "text"})
+  getFileInfo(id: string) {
+    return this._http.get(this.API_URL + '/file-info/' + id)
   }
 
   getListFiles(params: any= {}) {
@@ -32,7 +32,7 @@ export class AppService extends ApiServiceBase{
     return this.makePostRequest(this.API_URL + '/user/save-file', {data})
   }
   customerUploadFile(data: FormData) {
-    return this.makePostRequest(this.API_URL + '/save-file-customer', {data})
+    return this._http.post(this.API_URL + '/save-file-customer', data, {responseType: "text"})
   }
 
   getContentFile(id: string) {
@@ -49,6 +49,10 @@ export class AppService extends ApiServiceBase{
 
   getUsers(data): Observable<any[]> {
     return this.makePostRequest(this.API_URL + '/admin/users', {data}) as Observable<any[]>
+  }
+
+  getUserProfile(): Observable<any[]> {
+    return this.makeGetRequest(this.API_URL + '/user-profile') as Observable<any[]>
   }
 
 }

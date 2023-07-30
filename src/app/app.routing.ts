@@ -4,6 +4,8 @@ import {FilesCustomerComponent} from "./files-customer/files-customer.component"
 import {environment} from "../environments/environment";
 import {CustomerFullComponent} from "./layouts/customer-full/customer-full.component";
 import {YourFilesComponent} from "./your-files/your-files.component";
+import {ViewFileComponent} from "./view-file/view-file.component";
+import {ViewFileResolver} from "./view-file.resolver";
 
 const router: Route[] = [
   {
@@ -17,6 +19,13 @@ const router: Route[] = [
       {
         path: 'your-files',
         component: YourFilesComponent,
+      },
+      {
+        path: 'view/:id',
+        component: ViewFileComponent,
+        resolve: {
+          fileDetail: ViewFileResolver
+        }
       }
     ]
   },

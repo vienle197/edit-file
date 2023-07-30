@@ -32,19 +32,28 @@
         <span nz-icon nzType="shopping-cart"></span>
         <span>File của khách</span>
       </li>
-      <li nz-submenu nzTitle="Cấu hình" nzIcon="setting">
-        <ul>
-          <li nz-menu-item [nzTooltipTitle]="isCollapsed ? 'Quản lý người dùng' : ''"
-              nz-tooltip
-              nzMatchRouter [routerLinkActive]="'/'+adminPath+'/users'" [routerLink]="'/'+adminPath+'/users'">
-            <a>Quản lý người dùng</a>
-          </li>
-          <li nz-menu-item [nzTooltipTitle]="isCollapsed ? 'Đổi mật khẩu' : ''"
-              nz-tooltip
-              nzMatchRouter [routerLinkActive]="'/'+adminPath+'/change-password'" [routerLink]="'/'+adminPath+'/change-password'">
-            <a>Đổi mật khẩu</a>
-          </li>
-        </ul>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Quản lý người dùng' : ''"
+        nzMatchRouter [routerLinkActive]="'/'+adminPath+'/users'" [routerLink]="'/'+adminPath+'/users'"
+      >
+        <span nz-icon nzType="bars"></span>
+        <span>Quản lý người dùng</span>
+      </li>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? user?.phone : ''"
+        nzMatchRouter [routerLinkActive]="'/'+adminPath+'/change-password'" [routerLink]="'/'+adminPath+'/change-password'"
+      >
+        <span nz-icon nzType="user"></span>
+        <div class="d-flex justify-content-between w-100 ps-2 pe-3 align-items-center">
+          <span>{{user?.phone}}</span>
+          <a href="javascript: void (0)" class="text-light" (click)="logout()"><span nz-icon nzType="logout"></span></a>
+        </div>
       </li>
     </ul>
     <div class="text-center" [class.ps-4]="!isCollapsed" [class.text-center]="isCollapsed">

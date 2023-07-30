@@ -1,0 +1,16 @@
+<nz-card class="mx-4 mt-2">
+  <div class="row">
+    <div class="col-6" style="text-align: right">
+      <iframe #invoicePreview class="preview-template border-0 shadow" [width]="w" [height]="h"></iframe>
+    </div>
+    <div class="col-6">
+      <h3>Thông tin khách hàng</h3>
+      <h4>
+        Sđt: <strong>{{fileInfo.info.phone}}</strong>
+      </h4>
+      <h4>
+        Kích thước: <strong>{{fileInfo.info.width}} x {{fileInfo.info.height}}</strong>
+      </h4>
+    </div>
+  </div>
+</nz-card>

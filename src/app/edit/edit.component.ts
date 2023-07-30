@@ -24,11 +24,7 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.appService.getContentTest().subscribe(
-      r => {
-        this.dataHtml = r
-      }
-    )
+
   }
 
 }
