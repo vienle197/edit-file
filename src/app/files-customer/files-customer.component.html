@@ -24,57 +24,17 @@
       </ng-container>
       <ng-container *ngIf="!loading">
         <div nz-col class="gutter-row" [nzSpan]="24 / 6" *ngFor="let item of listOfData">
-          <div class="grid-config" (click)="showModal(item)">
+          <a class="grid-config d-block" [href]="'/edit-file/' + item.id + '/' + item.name">
             <img #img (error)="img.src = 'assets/images/logo.png'" [src]="urlBE + '/image/' + item.name + '.png'" />
             <div class="info-file">
               {{item.name}}
             </div>
-          </div>
+          </a>
         </div>
       </ng-container>
     </div>
   </div>
 </div>
-<nz-modal [(nzVisible)]="isVisibleUpload" nzTitle="Chỉnh sửa file" nzWidth="100vw"
-          [nzCancelLoading]="uploading"
-          [nzOkLoading]="uploading"
-          [nzOkText]="'Chốt file'"
-          [nzCancelText]="'Huỷ'" [nzBodyStyle]="{height: 'calc(100vh - 15rem)'}"
-          (nzOnCancel)="handleCancel()" (nzOnOk)="submitFile()">
-  <ng-container *nzModalContent>
-    <ng-container *ngIf="!gettingFile;else loadingTpl">
-      <div class="row">
-        <div class="col-8">
-          <ng-container  [ngTemplateOutlet]="templateEdit"></ng-container>
-        </div>
-        <div class="col-4" [formGroup]="formInfo">
-          <h4>Thông tin khách hàng</h4>
-          <div class="form-group mb-2">
-            <label class="fw-bolder">Số điện thoại <span class="text-danger">*</span></label>
-            <input formControlName="phone" class="form-control"
-                   [class.is-invalid]="(formInfo.get('phone').dirty || formInfo.get('phone').touched) && formInfo.get('phone').errors"
-                   [class.is-valid]="(formInfo.get('phone').dirty || formInfo.get('phone').touched) && !formInfo.get('phone').errors">
-          </div>
-          <div class="form-group">
-            <label class="fw-bolder">Kích thước yêu cầu <span class="text-black-50 small">(Mặc định: {{dimension.width}}x{{dimension.height}})</span></label>
-            <div class="d-flex align-items-center">
-              <input formControlName="width" class="form-control" type="number"
-                     [class.is-invalid]="(formInfo.get('width').dirty || formInfo.get('width').touched) && formInfo.get('width').errors"
-                     [class.is-valid]="(formInfo.get('width').dirty || formInfo.get('width').touched) && !formInfo.get('width').errors">
-              <div class="px-2">X</div>
-              <input formControlName="height" class="form-control" type="number"
-                     [class.is-invalid]="(formInfo.get('height').dirty || formInfo.get('height').touched) && formInfo.get('height').errors"
-                     [class.is-valid]="(formInfo.get('height').dirty || formInfo.get('height').touched) && !formInfo.get('height').errors">
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
-</nz-modal>
-<ng-template #templateEdit>
-  <ckeditor id="editor-pdf" #editor1 [data]="dataHtml" [config]="configCkeditor"></ckeditor>
-</ng-template>
 <ng-template #loadingTpl>
   <div class="text-center" style="line-height: 200px">
     <span nz-icon class="icon-extra" [nzType]="'loading'"></span>

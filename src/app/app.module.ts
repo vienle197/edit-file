@@ -38,6 +38,8 @@ import {NzTagModule} from "ng-zorro-antd/tag";
 import {NzCardModule} from "ng-zorro-antd/card";
 import {ModalViewFileComponent} from "./modal-view-file/modal-view-file.component";
 import {ViewFileComponent} from "./view-file/view-file.component";
+import {EditFileComponent} from './edit-file/edit-file.component';
+import {NzButtonModule} from 'ng-zorro-antd/button';
 
 @NgModule({
   declarations: [
@@ -50,39 +52,41 @@ import {ViewFileComponent} from "./view-file/view-file.component";
     CustomerFullComponent,
     YourFilesComponent,
     ModalViewFileComponent,
-    ViewFileComponent
+    ViewFileComponent,
+    EditFileComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterOutlet,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    CKEditorModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot({
-      preventDuplicates: true,
-      countDuplicates: true,
-      autoDismiss: true,
-      maxOpened: 3,
-      resetTimeoutOnDuplicate: true,
-      tapToDismiss: false,
-      closeButton: true,
-      enableHtml: true
-    }),
-    FormsModule,
-    IconsProviderModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzToolTipModule,
-    RouterLinkActive,
-    RouterLink,
-    NzGridModule,
-    NzModalModule,
-    NzTableModule,
-    NzTagModule,
-    NzCardModule,
-  ],
+    imports: [
+        BrowserModule,
+        RouterOutlet,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        CKEditorModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        ToastrModule.forRoot({
+            preventDuplicates: true,
+            countDuplicates: true,
+            autoDismiss: true,
+            maxOpened: 3,
+            resetTimeoutOnDuplicate: true,
+            tapToDismiss: false,
+            closeButton: true,
+            enableHtml: true
+        }),
+        FormsModule,
+        IconsProviderModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzToolTipModule,
+        RouterLinkActive,
+        RouterLink,
+        NzGridModule,
+        NzModalModule,
+        NzTableModule,
+        NzTagModule,
+        NzCardModule,
+        NzButtonModule,
+    ],
   bootstrap: [AppComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ValidateAccessTokenInterceptor, multi: true},

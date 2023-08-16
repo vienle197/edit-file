@@ -6,6 +6,8 @@ import {CustomerFullComponent} from "./layouts/customer-full/customer-full.compo
 import {YourFilesComponent} from "./your-files/your-files.component";
 import {ViewFileComponent} from "./view-file/view-file.component";
 import {ViewFileResolver} from "./view-file.resolver";
+import {EditFileComponent} from './edit-file/edit-file.component';
+import {EditFileResolver} from './edit-file.resolver';
 
 const router: Route[] = [
   {
@@ -19,6 +21,13 @@ const router: Route[] = [
       {
         path: 'your-files',
         component: YourFilesComponent,
+      },
+      {
+        path: 'edit-file/:id/:name',
+        component: EditFileComponent,
+        resolve: {
+          dataHtml: EditFileResolver
+        }
       },
       {
         path: 'view/:id',

@@ -7,7 +7,6 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class AppService extends ApiServiceBase{
-
   getFileInfo(id: string) {
     return this._http.get(this.API_URL + '/file-info/' + id)
   }
@@ -36,6 +35,7 @@ export class AppService extends ApiServiceBase{
   }
 
   getContentFile(id: string) {
+    // return this._http.get('/assets/temp/test.html', {responseType: "text"})
     return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
   }
 
