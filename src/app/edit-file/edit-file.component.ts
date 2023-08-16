@@ -29,13 +29,17 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   uploading = false
   configCkeditor = {
     fullPage: true,
-    extraPlugins: 'docprops',
-    // Disable content filtering because if you use full page mode, you probably
-    // want to  freely enter any HTML content in source mode without any limitations.
+    // extraPlugins: 'docprops',
+    // colorButton_enableAutomatic: true,
     allowedContent: true,
     height: 'height: calc(100vh - 15rem);',
     removeButtons: 'PasteFromWord',
-    contentsCss: '/assets/styles/ckeditor.css'
+    contentsCss: '/assets/styles/ckeditor.css',
+    toolbar: [
+      [ 'Undo', 'Redo' ],
+      [ 'TextColor' ],
+      [ 'Font', 'FontSize' ]
+    ]
   }
   constructor(
     private activateRoute: ActivatedRoute,
@@ -52,7 +56,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     const doc = parser.parseFromString(res, 'text/html');
     const newScss = document.createElement('style')
     newScss.textContent = "#page-container .page-content div:not(img) {\n" +
-      "    border: 2px dashed #1890ff;\n" +
+      "    border: 10px dashed #1890ff;\n" +
       "  }"
     newScss.setAttribute('id', 'mark-editor')
     doc.querySelector('head').append(newScss);

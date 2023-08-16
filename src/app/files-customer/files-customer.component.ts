@@ -24,6 +24,7 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
     page: [1],
     size: [20]
   })
+  numberItems = 6
   isVisibleUpload: boolean = false;
 
   handleCancel(): void {

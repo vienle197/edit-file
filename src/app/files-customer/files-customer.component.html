@@ -6,25 +6,25 @@
   <div class="gutter-example">
     <div nz-row [nzGutter]="[16, 16]">
       <ng-container *ngIf="loading">
-        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+        <div nz-col class="gutter-row" [nzSpan]="24 / numberItems">
           <div class="grid-config loading">
             <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
           </div>
         </div>
-        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+        <div nz-col class="gutter-row" [nzSpan]="24 / numberItems">
           <div class="grid-config loading">
             <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
           </div>
         </div>
-        <div nz-col class="gutter-row" [nzSpan]="24 / 6">
+        <div nz-col class="gutter-row" [nzSpan]="24 / numberItems">
           <div class="grid-config loading">
             <ng-container [ngTemplateOutlet]="loadingTpl"></ng-container>
           </div>
         </div>
       </ng-container>
       <ng-container *ngIf="!loading">
-        <div nz-col class="gutter-row" [nzSpan]="24 / 6" *ngFor="let item of listOfData">
-          <a class="grid-config d-block" [href]="'/edit-file/' + item.id + '/' + item.name">
+        <div nz-col class="gutter-row" [nzSpan]="24 / numberItems" *ngFor="let item of listOfData">
+          <a class="grid-config d-block" [href]="'/edit-file/' + item.id + '/' + item.name" target="_blank">
             <img #img (error)="img.src = 'assets/images/logo.png'" [src]="urlBE + '/image/' + item.name + '.png'" />
             <div class="info-file">
               {{item.name}}
