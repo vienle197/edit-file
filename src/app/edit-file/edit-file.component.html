@@ -1,9 +1,9 @@
 <div class="row mt-5 mx-3" *ngIf="dataHtml">
-  <div class="col-8">
+  <div class="col-lg-8 col-sm-12">
     <ckeditor id="editor-pdf" #editor1 [data]="dataHtml" editorUrl="https://cdn.ckeditor.com/4.14.0/full/ckeditor.js"
               [config]="configCkeditor"></ckeditor>
   </div>
-  <div class="col-4" [formGroup]="formInfo">
+  <div class="col-lg-4 col-sm-12 mt-lg-0 mt-4 " [formGroup]="formInfo">
     <h4>Thông tin khách hàng</h4>
     <div class="form-group mb-2">
       <label class="fw-bolder">Số điện thoại <span class="text-danger">*</span></label>

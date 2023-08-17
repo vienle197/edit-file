@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../services/app.service";
 import {ToastrService} from "ngx-toastr";
@@ -26,6 +26,10 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
   })
   numberItems = 6
   isVisibleUpload: boolean = false;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setNumberItems()
+  }
 
   handleCancel(): void {
     this.isVisibleUpload = false;
@@ -36,6 +40,19 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router
   ) { }
+  setNumberItems() {
+    if(window.innerWidth < 300) {
+      this.numberItems = 1
+    } else if (window.innerWidth < 500) {
+      this.numberItems = 2
+    } else if (window.innerWidth < 700) {
+      this.numberItems = 3
+    } else if (window.innerWidth < 900) {
+      this.numberItems = 4
+    } else {
+      this.numberItems = 6
+    }
+  }
 
   ngOnDestroy() {
     this.destroy$.next()
@@ -44,7 +61,7 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.setNumberItems()
     this.formSearch = this.fb.group({
     })
     this.formPaging.valueChanges
@@ -54,10 +71,21 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
         switchMap(
           paging => {
             this.loading = true
-            return this.appService.getListFiles({
-              ...paging,
-              ...this.formSearch.value
-            }).pipe(finalize(() => this.loading = false))
+            return of([
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+              {id: 111, name: 'test'},
+            ]).pipe(finalize(() => this.loading = false))
+            // return this.appService.getListFiles({
+            //   ...paging,
+            //   ...this.formSearch.value
+            // }).pipe(finalize(() => this.loading = false))
           }
         )
       )

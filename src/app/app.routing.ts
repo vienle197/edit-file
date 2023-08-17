@@ -26,7 +26,7 @@ const router: Route[] = [
         path: 'edit-file/:id/:name',
         component: EditFileComponent,
         resolve: {
-          dataHtml: EditFileResolver
+          fileDetail: ViewFileResolver
         }
       },
       {

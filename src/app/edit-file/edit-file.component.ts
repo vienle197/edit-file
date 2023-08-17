@@ -26,6 +26,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     height: 0
   }
   dataHtml = ''
+  fileInfo
   uploading = false
   configCkeditor = {
     fullPage: true,
@@ -51,7 +52,8 @@ export class EditFileComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initForm()
-    const res = this.activateRoute.snapshot.data.dataHtml
+    this.fileInfo = this.activateRoute.snapshot.data.fileDetail.info
+    const res = this.activateRoute.snapshot.data.fileDetail.content
     const parser = new DOMParser();
     const doc = parser.parseFromString(res, 'text/html');
     const newScss = document.createElement('style')
@@ -113,7 +115,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     const pdfBlob = new Blob([new XMLSerializer().serializeToString(doc)], { type: 'application/html' });
     const formData = new FormData()
     formData.append('file', pdfBlob)
-    formData.append('name', `${this.activateRoute.snapshot.params.name}-${this.formInfo.value.phone}`)
+    formData.append('name', `${this.fileInfo.name}-${this.formInfo.value.phone}`)
     formData.append('phone', this.formInfo.value.phone)
     formData.append('height', `${this.formInfo.value.height}`)
     formData.append('width', `${this.formInfo.value.width}`)

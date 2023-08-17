@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ApiServiceBase} from "./api-base";
-import {Observable} from "rxjs";
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService extends ApiServiceBase{
   getFileInfo(id: string) {
-    return this._http.get(this.API_URL + '/file-info/' + id)
+    return of({
+      id: id,
+      name: 'abcdef.png',
+    })
+    // return this._http.get(this.API_URL + '/file-info/' + id)
   }
 
   getListFiles(params: any= {}) {
@@ -35,8 +39,8 @@ export class AppService extends ApiServiceBase{
   }
 
   getContentFile(id: string) {
-    // return this._http.get('/assets/temp/test.html', {responseType: "text"})
-    return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
+    return this._http.get('/assets/temp/test.html', {responseType: "text"})
+    // return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
   }
 
   changePassword(data) {
