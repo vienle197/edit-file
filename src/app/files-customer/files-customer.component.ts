@@ -71,21 +71,10 @@ export class FilesCustomerComponent implements OnInit, OnDestroy {
         switchMap(
           paging => {
             this.loading = true
-            return of([
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-              {id: 111, name: 'test'},
-            ]).pipe(finalize(() => this.loading = false))
-            // return this.appService.getListFiles({
-            //   ...paging,
-            //   ...this.formSearch.value
-            // }).pipe(finalize(() => this.loading = false))
+            return this.appService.getListFiles({
+              ...paging,
+              ...this.formSearch.value
+            }).pipe(finalize(() => this.loading = false))
           }
         )
       )
