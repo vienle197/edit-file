@@ -13,6 +13,7 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 import { FileByCustomerComponent } from './components/file-by-customer/file-by-customer.component';
 import { UsersComponent } from './components/users/users.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import {SharesModule} from '../shares/shares.module';
 
 
 
@@ -24,17 +25,18 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     UsersComponent,
     ChangePasswordComponent
   ],
-  imports: [
-    CommonModule,
-    AdminManagementRouting,
-    ReactiveFormsModule,
-    NzTableModule,
-    NzDividerModule,
-    NzTagModule,
-    NzButtonModule,
-    NzIconModule,
-    FormsModule,
-    NzModalModule
-  ]
+    imports: [
+        CommonModule,
+        AdminManagementRouting,
+        ReactiveFormsModule,
+        NzTableModule,
+        NzDividerModule,
+        NzTagModule,
+        NzButtonModule,
+        NzIconModule,
+        FormsModule,
+        NzModalModule,
+        SharesModule
+    ]
 })
 export class AdminManagementModule { }

@@ -40,6 +40,7 @@ import {ModalViewFileComponent} from "./modal-view-file/modal-view-file.componen
 import {ViewFileComponent} from "./view-file/view-file.component";
 import {EditFileComponent} from './edit-file/edit-file.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
+import {SharesModule} from './shares/shares.module';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
         NzTagModule,
         NzCardModule,
         NzButtonModule,
+        SharesModule,
     ],
   bootstrap: [AppComponent],
   providers: [

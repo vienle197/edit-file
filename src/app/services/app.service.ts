@@ -8,23 +8,32 @@ import {Observable, of} from 'rxjs';
 })
 export class AppService extends ApiServiceBase{
   getFileInfo(id: string) {
-    return of({
-      id: id,
-      name: 'abcdef.png',
-    })
-    // return this._http.get(this.API_URL + '/file-info/' + id)
+    // return of({
+    //   id: id,
+    //   name: 'abcdef.png',
+    // })
+    return this._http.get(this.API_URL + '/file-info/' + id)
   }
 
   getListFiles(params: any= {}) {
+    // return of([{
+    //   id: 1,
+    //   name: 'abcdef.png',
+    //   phone: '1212121212121',
+    // }])
     return this.makeGetRequest(this.API_URL + '/file-stores', {params}) as Observable<any>
   }
 
   removeFile(id) {
-    // return this.makeDeleteRequest(this.API_URL + '/user/file/' + id) as Observable<any>
     return this._http.delete(this.API_URL + '/user/file/' + id) as Observable<any>
   }
 
   getListFilesCustomer(params: any= {}) {
+    // return of([{
+    //   id: 1,
+    //   name: 'abcdef.png',
+    //   phone: '1212121212121',
+    // }])
     return this.makeGetRequest(this.API_URL + '/file-stores-customer', {params: {
         ...params,
         phone: params?.phone || ''
@@ -39,8 +48,8 @@ export class AppService extends ApiServiceBase{
   }
 
   getContentFile(id: string) {
-    return this._http.get('/assets/temp/test.html', {responseType: "text"})
-    // return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
+    // return this._http.get('/assets/temp/test.html', {responseType: "text"})
+    return this._http.get(this.API_URL + '/load/' + id, {responseType: "text"})
   }
 
   changePassword(data) {

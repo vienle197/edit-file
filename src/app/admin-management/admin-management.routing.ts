@@ -38,7 +38,7 @@ const router: Route[] = [
             component: ChangePasswordComponent
           }
         ],
-        canActivate: [AuthGuard]
+        // canActivate: [AuthGuard]
       },
     ]
   },

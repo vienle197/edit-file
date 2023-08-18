@@ -104,32 +104,4 @@ export class FilesComponent implements OnInit, OnDestroy {
         e => this.toast.error('Upload file thất bại!')
       )
   }
-
-  removeFile(data: any) {
-      if(data.removing) return
-    data.removing = true
-    this.appService.removeFile(data.id)
-      .pipe(finalize(() => data.removing = false))
-      .subscribe(
-        res => {
-          this.toast.success('Xoá file thành công!')
-          this.formPaging.patchValue({page: this.formPaging.value.page})
-        },
-        e => this.toast.error('Xoá file thất bại!')
-      )
-  }
-
-  viewFile(id) {
-    this.modalService.create({
-      nzTitle: 'Modal Title',
-      nzContent: ModalViewFileComponent,
-      nzComponentParams: {
-        idFile: id
-      },
-      nzWidth: 'auto',
-      nzBodyStyle: {'max-width': '100vw'},
-      nzStyle: { top: '20px' },
-      nzFooter: null
-    });
-  }
 }

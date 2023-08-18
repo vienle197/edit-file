@@ -2,3 +2,8 @@
 .icon-extra {
   font-size: 50px;
 }
+@media (max-width: 1200px) {
+  .ant-card-body {
+    padding: 1rem !important;
+  }
+}

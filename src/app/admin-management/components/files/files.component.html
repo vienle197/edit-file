@@ -1,42 +1,16 @@
-<div class="d-flex justify-content-between">
-  <h4>Danh sách files</h4>
-  <div>
+<div class="row justify-content-between mb-2">
+  <div class="col-md-6">
+    <h4>Danh sách files</h4>
+  </div>
+  <div class="col-md-6 mt-sm-2 text-end">
     <button nz-button nzType="primary" class="d-flex align-items-center" (click)="showModal()" nzShape="round" [nzLoading]="uploading">
       <span nz-icon [nzType]="'upload'"></span>
       Tải file lên
     </button>
   </div>
 </div>
-<nz-table #basicTable [nzData]="listOfData" [nzLoading]="loading">
-  <thead>
-  <tr>
-    <th>Id</th>
-    <th>Tên file</th>
-<!--    <th>Đường dẫn</th>-->
-    <th>Người tải lên</th>
-    <th>Số điện thoại</th>
-    <th [nzWidth]="'50'">Hành động</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.id }}</td>
-    <td>{{ data.name }}</td>
-<!--    <td>{{ data.path }}</td>-->
-    <td>
-      <nz-tag [nzColor]="'green'" *ngIf="data.isCustomer">Khách hàng</nz-tag>
-      <nz-tag [nzColor]="'red'" *ngIf="!data.isCustomer">Admin</nz-tag>
-    </td>
-    <td>{{ data.phone }}</td>
-    <td>
-      <a (click)="removeFile(data)" *ngIf="!data.removing">Xoá file</a>
-      <a *ngIf="data.removing">Đang xoá</a>
-      <nz-divider nzType="vertical"></nz-divider>
-      <a href="javascript: void(0)" (click)="viewFile(data.id)">Xem file</a>
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+<app-list-file [loading]="loading" [listOfData]="listOfData" [allowRemove]="true"></app-list-file>
+
 <nz-modal [(nzVisible)]="isVisibleUpload" nzTitle="Upload file"
           [nzCancelLoading]="uploading"
           [nzOkLoading]="uploading"
