@@ -30,8 +30,8 @@ export class ListFileComponent implements OnInit {
       .pipe(finalize(() => data.removing = false))
       .subscribe(
         res => {
-          this.toast.success('Xoá file thành công!')
           this.onRemoved.next(true)
+          this.toast.success('Xoá file thành công!')
         },
         e => this.toast.error('Xoá file thất bại!')
       )

@@ -49,6 +49,9 @@ export class FilesComponent implements OnInit, OnDestroy {
     this.destroy$.complete()
     this.destroy$.unsubscribe()
   }
+  onSearch() {
+    this.formPaging.patchValue({page: 1})
+  }
 
   ngOnInit(): void {
     this.formSearch = this.fb.group({

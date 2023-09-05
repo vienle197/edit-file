@@ -9,10 +9,9 @@
     </button>
   </div>
 </div>
-<app-list-file [loading]="loading" [listOfData]="listOfData" [allowRemove]="true"></app-list-file>
+<app-list-file [loading]="loading" [listOfData]="listOfData" [allowRemove]="true" (onRemoved)="onSearch()"></app-list-file>
 
 <nz-modal [(nzVisible)]="isVisibleUpload" nzTitle="Upload file"
-          [nzCancelLoading]="uploading"
           [nzOkLoading]="uploading"
           [nzOkText]="'Upload'"
           [nzCancelText]="'Huỷ'"
