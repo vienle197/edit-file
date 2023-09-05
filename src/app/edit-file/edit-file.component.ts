@@ -57,8 +57,8 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     const parser = new DOMParser();
     const doc = parser.parseFromString(res, 'text/html');
     const newScss = document.createElement('style')
-    newScss.textContent = "#page-container .page-content div:not(img) {\n" +
-      "    border: 10px dashed #1890ff;\n" +
+    newScss.textContent = "#page-container div.t {\n" +
+      "    border: 10px solid #1890ff;\n" +
       "  }"
     newScss.setAttribute('id', 'mark-editor')
     doc.querySelector('head').append(newScss);
@@ -86,7 +86,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   setDimensionDefault() {
     try {
       const iframe = document.querySelector('ckeditor iframe') as HTMLIFrameElement
-      const pageRef = iframe?.contentDocument?.querySelector('#page-container .page')
+      const pageRef = iframe?.contentDocument?.querySelector('#page-container div')
       const x = simplifyFraction(pageRef.clientWidth, pageRef.clientHeight)
       this.dimension = {
         width: x[0],

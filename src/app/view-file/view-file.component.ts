@@ -38,7 +38,7 @@ export class ViewFileComponent implements OnInit, AfterViewInit {
   setDimensionDefault() {
     try {
       const iframe = document.querySelector('iframe') as HTMLIFrameElement
-      const pageRef = iframe?.contentDocument?.querySelector('#page-container .page')
+      const pageRef = iframe?.contentDocument?.querySelector('#page-container div')
       const x = simplifyFraction(pageRef.clientWidth, pageRef.clientHeight)
       this.w = x[0] + 40
       this.h = x[1] + 40

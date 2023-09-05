@@ -46,7 +46,7 @@ export class ModalViewFileComponent implements OnInit, AfterViewInit {
   setDimensionDefault() {
     try {
       const iframe = document.querySelector('iframe') as HTMLIFrameElement
-      const pageRef = iframe?.contentDocument?.querySelector('#page-container .page')
+      const pageRef = iframe?.contentDocument?.querySelector('#page-container div')
       console.log(pageRef)
       console.log(pageRef.clientWidth, pageRef.clientHeight)
       const x = simplifyFraction(pageRef.clientWidth, pageRef.clientHeight)

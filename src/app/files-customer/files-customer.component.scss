@@ -43,7 +43,7 @@
   #editor-pdf .cke_contents.cke_reset {
     height: calc(100vh - 25rem);
   }
-  #page-container .page-content div:not(img) {
+  #page-container div.t {
     border: 1px dashed #9e9e9e;
   }
 }
