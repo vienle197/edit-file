@@ -21,6 +21,12 @@
             <span nz-icon nzType="eye" nzTheme="outline"></span>
             <span class="ps-1 d-none d-sm-block">Xem file</span>
           </a></div>
+          <div *ngIf="allowEdit">
+            <a [href]="'/file/copy/' + data.id + '/' + data.name" target="_blank" class="d-flex align-items-baseline">
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+              <span class="ps-1 d-none d-sm-block">Sửa file</span>
+            </a>
+          </div>
           <div *ngIf="allowRemove"><a class="text-danger d-flex align-items-baseline" (click)="removeFile(data)" *ngIf="!data.removing">
             <span nz-icon nzType="delete" nzTheme="outline"></span>
             <span class="ps-1 d-none d-sm-block">Xoá file</span>

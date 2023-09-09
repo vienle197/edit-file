@@ -24,7 +24,7 @@
       </ng-container>
       <ng-container *ngIf="!loading">
         <div nz-col class="gutter-row" [nzSpan]="24 / numberItems" *ngFor="let item of listOfData">
-          <a class="grid-config d-block" [href]="'/edit-file/' + item.id + '/' + item.name" target="_blank">
+          <a class="grid-config d-block" [href]="'/file/edit/' + item.id + '/' + item.name" target="_blank">
             <img #img (error)="img.src = 'assets/images/logo.png'" [src]="urlBE + '/image/' + item.name + '.png'" />
             <div class="info-file">
               {{item.name}}

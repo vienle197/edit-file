@@ -23,7 +23,7 @@ const router: Route[] = [
         component: YourFilesComponent,
       },
       {
-        path: 'edit-file/:id/:name',
+        path: 'file/:typeEdit/:id/:name',
         component: EditFileComponent,
         resolve: {
           fileDetail: ViewFileResolver

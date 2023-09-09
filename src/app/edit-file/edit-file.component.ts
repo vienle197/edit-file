@@ -18,8 +18,8 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   formInfo = this.fb.group({
     phone: [localStorage.getItem('phone'), [Validators.required]],
     // file: [null, [Validators.required]],
-    width: [0, [Validators.required]],
-    height: [0, [Validators.required]],
+    width: [0, [Validators.required, Validators.min(1)]],
+    height: [0, [Validators.required, Validators.min(1)]],
   })
   dimension = {
     width: 0,
@@ -92,7 +92,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
         width: x[0],
         height: x[1],
       }
-      this.formInfo.patchValue(this.dimension, {emitEvent: false})
+      // this.formInfo.patchValue(this.dimension, {emitEvent: false})
     } catch (e) {
       setTimeout(() => {
         this.setDimensionDefault()

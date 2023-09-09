@@ -19,10 +19,11 @@ export class EditFileResolver implements Resolve<boolean> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const id = route.params?.id
-    if (!id) {
-      this.router.navigateByUrl('/')
-      return of({});
-    }
+    console.log(id, route)
+    // if (!id) {
+    //   this.router.navigateByUrl('/')
+    //   return of({});
+    // }
     return this.appService.getContentFile(id).pipe(
       catchError(() => {
         this.router.navigateByUrl('/')

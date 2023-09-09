@@ -12,6 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 export class ListFileComponent implements OnInit {
   @Input() listOfData: any[] = []
   @Input() loading = false
+  @Input() allowEdit = false
   @Input() allowRemove = false
   @Output() onRemoved: EventEmitter<boolean> = new EventEmitter<boolean>()
   urlBE = environment.api
