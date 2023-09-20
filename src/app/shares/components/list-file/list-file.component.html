@@ -21,8 +21,14 @@
             <span nz-icon nzType="eye" nzTheme="outline"></span>
             <span class="ps-1 d-none d-sm-block">Xem file</span>
           </a></div>
-          <div *ngIf="allowEdit">
+          <div *ngIf="allowCopy">
             <a [href]="'/file/copy/' + data.id + '/' + data.name" target="_blank" class="d-flex align-items-baseline">
+              <span nz-icon nzType="edit" nzTheme="outline"></span>
+              <span class="ps-1 d-none d-sm-block">Copy file</span>
+            </a>
+          </div>
+          <div *ngIf="allowEdit">
+            <a [href]="'/file/admin-edit/' + data.id + '/' + data.name" class="d-flex align-items-baseline">
               <span nz-icon nzType="edit" nzTheme="outline"></span>
               <span class="ps-1 d-none d-sm-block">Sửa file</span>
             </a>

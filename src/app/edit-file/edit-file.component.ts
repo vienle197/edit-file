@@ -25,6 +25,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     width: 0,
     height: 0
   }
+  type = 'edit'
   dataHtml = ''
   fileInfo
   uploading = false
@@ -53,6 +54,8 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.initForm()
     this.fileInfo = this.activateRoute.snapshot.data.fileDetail.info
+    this.type = this.activateRoute.snapshot.params.typeEdit || this.type
+    console.log(this.type)
     const res = this.activateRoute.snapshot.data.fileDetail.content
     const parser = new DOMParser();
     const doc = parser.parseFromString(res, 'text/html');
@@ -92,6 +95,9 @@ export class EditFileComponent implements OnInit, AfterViewInit {
         width: x[0],
         height: x[1],
       }
+      if(pageRef.clientWidth > iframe?.clientWidth) {
+        iframe?.contentDocument?.querySelector('body').setAttribute('style', 'zoom: ' + ((iframe?.clientWidth - 50) / pageRef.clientWidth).toFixed(3))
+      }
       // this.formInfo.patchValue(this.dimension, {emitEvent: false})
     } catch (e) {
       setTimeout(() => {
@@ -103,7 +109,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
 
 
   submitFile() {
-    if(this.formInfo.invalid) {
+    if(this.formInfo.invalid && this.type != 'admin-edit') {
       this.formInfo.markAllAsTouched()
       return
     }
@@ -112,22 +118,39 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     const parser = new DOMParser();
     const doc = parser.parseFromString(content, 'text/html');
     doc.querySelector('#mark-editor').remove()
+    doc.querySelector('body').removeAttribute('style')
     const pdfBlob = new Blob([new XMLSerializer().serializeToString(doc)], { type: 'application/html' });
     const formData = new FormData()
     formData.append('file', pdfBlob)
-    formData.append('name', `${this.fileInfo.name}-${this.formInfo.value.phone}`)
-    formData.append('phone', this.formInfo.value.phone)
-    formData.append('height', `${this.formInfo.value.height}`)
-    formData.append('width', `${this.formInfo.value.width}`)
-    this.appService.customerUploadFile(formData)
-      .pipe(finalize(() => this.uploading = false))
-      .subscribe(
-        id => {
-          localStorage.setItem('phone', this.formInfo.value.phone)
-          this.toast.success('Chốt file thành công')
-          this.router.navigateByUrl('/view/' + id)
-        }
-      )
+    if(this.type == 'admin-edit') {
+      formData.append('id', this.fileInfo.id)
+      this.appService.updateFile(formData, this.fileInfo.id)
+        .pipe(finalize(() => this.uploading = false))
+        .subscribe(
+          id => {
+            this.toast.success('Sửa file thành công')
+            this.router.navigateByUrl('/admin-management/files')
+          }
+        )
+    } else {
+      formData.append('name', `${this.fileInfo.name}-${this.formInfo.value.phone}`)
+      formData.append('phone', this.formInfo.value.phone)
+      formData.append('height', `${this.formInfo.value.height}`)
+      formData.append('width', `${this.formInfo.value.width}`)
+      this.appService.customerUploadFile(formData)
+        .pipe(finalize(() => this.uploading = false))
+        .subscribe(
+          id => {
+            localStorage.setItem('phone', this.formInfo.value.phone)
+            this.toast.success('Chốt file thành công')
+            this.router.navigateByUrl('/view/' + id)
+          }
+        )
+    }
   }
 
+  cancel() {
+    this.router.navigateByUrl('/admin-management/files')
+
+  }
 }

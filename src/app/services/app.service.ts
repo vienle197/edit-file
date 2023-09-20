@@ -43,6 +43,10 @@ export class AppService extends ApiServiceBase{
   uploadFile(data: FormData) {
     return this.makePostRequest(this.API_URL + '/user/save-file', {data})
   }
+
+  updateFile(data: FormData, id: string) {
+    return this.makePostRequest(this.API_URL + `/user/update-file/${id}`, {data})
+  }
   customerUploadFile(data: FormData) {
     return this._http.post(this.API_URL + '/save-file-customer', data, {responseType: "text"})
   }
