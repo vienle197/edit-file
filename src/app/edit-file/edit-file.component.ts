@@ -55,7 +55,9 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     this.initForm()
     this.fileInfo = this.activateRoute.snapshot.data.fileDetail.info
     this.type = this.activateRoute.snapshot.params.typeEdit || this.type
-    console.log(this.type)
+    if(this.type == 'admin-edit') {
+      this.configCkeditor.toolbar = this.configCkeditor.toolbar.concat([['Source']])
+    }
     const res = this.activateRoute.snapshot.data.fileDetail.content
     const parser = new DOMParser();
     const doc = parser.parseFromString(res, 'text/html');
