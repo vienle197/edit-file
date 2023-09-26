@@ -15,6 +15,8 @@ export class FilesComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>()
   formUpload = this.fb.group({
     name: [null, [Validators.required]],
+    width: [0, [Validators.required, Validators.min(1)]],
+    height: [0, [Validators.required, Validators.min(1)]],
     file: [null, [Validators.required]]
   })
   fileSelected: File
@@ -96,6 +98,8 @@ export class FilesComponent implements OnInit, OnDestroy {
     const formData = new FormData()
     formData.append('file', this.fileSelected)
     formData.append('name', this.formUpload.value.name)
+    formData.append('height', `${this.formUpload.value.height}`)
+    formData.append('width', `${this.formUpload.value.width}`)
     this.appService.uploadFile(formData)
       .pipe(finalize(() => this.uploading = false))
       .subscribe(

@@ -14,18 +14,35 @@
 <nz-modal [(nzVisible)]="isVisibleUpload" nzTitle="Upload file"
           [nzOkLoading]="uploading"
           [nzOkText]="'Upload'"
+          [nzWidth]="'600px'"
           [nzCancelText]="'Huỷ'"
           (nzOnCancel)="handleCancel()" (nzOnOk)="uploadFile()">
   <ng-container *nzModalContent>
     <div [formGroup]="formUpload">
       <div class="mb-3">
-        <label class="mb-1">Tên hiển thị <span class="text-danger">*</span></label>
+        <label class="mb-1 fw-bolder">Tên hiển thị <span class="text-danger">*</span></label>
         <input class="form-control" formControlName="name" placeholder="Tên hiển thị"
                [class.is-invalid]="(formUpload.controls.name.touched || formUpload.controls.name.dirty) && formUpload.controls.name.errors"
                [class.is-valid]="(formUpload.controls.name.touched || formUpload.controls.name.dirty) && !formUpload.controls.name.errors">
       </div>
+      <div class="form-group mb-3">
+        <label class="fw-bolder">Kích thước mặc định <span class="text-danger">*</span></label>
+        <div class="d-flex align-items-center">
+          <div class="me-1">Ngang:</div>
+          <input formControlName="width" class="form-control me-1" type="number"
+                 [class.is-invalid]="(formUpload.get('width').dirty || formUpload.get('width').touched) && formUpload.get('width').errors"
+                 [class.is-valid]="(formUpload.get('width').dirty || formUpload.get('width').touched) && !formUpload.get('width').errors">
+          <div>cm</div>
+          <div class="px-2">X</div>
+          <div class="me-1">Dọc:</div>
+          <input formControlName="height" class="form-control me-1" type="number"
+                 [class.is-invalid]="(formUpload.get('height').dirty || formUpload.get('height').touched) && formUpload.get('height').errors"
+                 [class.is-valid]="(formUpload.get('height').dirty || formUpload.get('height').touched) && !formUpload.get('height').errors">
+          <div>cm</div>
+        </div>
+      </div>
       <div class="">
-        <label class="mb-1">Chọn file <span class="text-danger">*</span></label>
+        <label class="mb-1 fw-bolder">Chọn file <span class="text-danger">*</span></label>
         <input type="file" class="form-control" accept="application/pdf" formControlName="file" placeholder="Chọn file" (change)="onChangeFile($any($event).target.files)"
                [class.is-invalid]="(formUpload.controls.file.touched || formUpload.controls.file.dirty) && formUpload.controls.file.errors"
                [class.is-valid]="(formUpload.controls.file.touched || formUpload.controls.file.dirty) && !formUpload.controls.file.errors">

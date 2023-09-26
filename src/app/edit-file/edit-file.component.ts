@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {simplifyFraction} from '../helpers/math-helper';
 import {finalize, Subject} from 'rxjs';
 import {CKEditorComponent} from 'ckeditor4-angular';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '../services/app.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -15,8 +15,9 @@ import {ToastrService} from 'ngx-toastr';
 export class EditFileComponent implements OnInit, AfterViewInit {
   private destroy$: Subject<void> = new Subject<void>()
   @ViewChild('editor1') editor1: CKEditorComponent
-  formInfo = this.fb.group({
+  formInfo: FormGroup = this.fb.group({
     phone: [localStorage.getItem('phone'), [Validators.required]],
+    name: [null],
     // file: [null, [Validators.required]],
     width: [0, [Validators.required, Validators.min(1)]],
     height: [0, [Validators.required, Validators.min(1)]],
@@ -38,26 +39,33 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     removeButtons: 'PasteFromWord',
     contentsCss: '/assets/styles/ckeditor.css',
     toolbar: [
-      [ 'Undo', 'Redo' ],
-      [ 'TextColor' ],
-      [ 'Font', 'FontSize' ]
+      ['Undo', 'Redo'],
+      ['TextColor'],
+      ['Font', 'FontSize']
     ]
   }
+
   constructor(
     private activateRoute: ActivatedRoute,
     private fb: FormBuilder,
     private appService: AppService,
     private toast: ToastrService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.initForm()
     this.fileInfo = this.activateRoute.snapshot.data.fileDetail.info
     this.type = this.activateRoute.snapshot.params.typeEdit || this.type
-    if(this.type == 'admin-edit') {
+    if (this.type == 'admin-edit') {
       this.configCkeditor.toolbar = this.configCkeditor.toolbar.concat([['Source']])
     }
+
+    this.dimension = {
+      width: this.fileInfo.width,
+      height: this.fileInfo.height,
+    }
+    this.initForm()
     const res = this.activateRoute.snapshot.data.fileDetail.content
     const parser = new DOMParser();
     const doc = parser.parseFromString(res, 'text/html');
@@ -69,6 +77,7 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     doc.querySelector('head').append(newScss);
     this.dataHtml = new XMLSerializer().serializeToString(doc);
   }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.setDimensionDefault()
@@ -76,16 +85,26 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   }
 
   initForm() {
-    this.formInfo.get('width').valueChanges.subscribe(
-      w => {
-        this.formInfo.get('height').patchValue(Math.round(w * (this.dimension.height / this.dimension.width)), {emitEvent: false})
-      }
-    )
-    this.formInfo.get('height').valueChanges.subscribe(
-      h => {
-        this.formInfo.get('width').patchValue(Math.round(h * (this.dimension.width / this.dimension.height)), {emitEvent: false})
-      }
-    )
+    if (this.type == 'admin-edit') {
+      this.formInfo = this.fb.group({
+        name: [null, [Validators.required]],
+        // file: [null, [Validators.required]],
+        width: [0, [Validators.required, Validators.min(1)]],
+        height: [0, [Validators.required, Validators.min(1)]],
+      })
+      this.formInfo.patchValue(this.fileInfo)
+    } else {
+      this.formInfo.get('width').valueChanges.subscribe(
+        w => {
+          this.formInfo.get('height').patchValue(Math.round(w * (this.dimension.height / this.dimension.width)), {emitEvent: false})
+        }
+      )
+      this.formInfo.get('height').valueChanges.subscribe(
+        h => {
+          this.formInfo.get('width').patchValue(Math.round(h * (this.dimension.width / this.dimension.height)), {emitEvent: false})
+        }
+      )
+    }
   }
 
   setDimensionDefault() {
@@ -93,11 +112,13 @@ export class EditFileComponent implements OnInit, AfterViewInit {
       const iframe = document.querySelector('ckeditor iframe') as HTMLIFrameElement
       const pageRef = iframe?.contentDocument?.querySelector('#page-container div')
       const x = simplifyFraction(pageRef.clientWidth, pageRef.clientHeight)
-      this.dimension = {
-        width: x[0],
-        height: x[1],
+      if (this.type == 'admin-edit') {
+        this.dimension = {
+          width: x[0],
+          height: x[1],
+        }
       }
-      if(pageRef.clientWidth > iframe?.clientWidth) {
+      if (pageRef.clientWidth > iframe?.clientWidth) {
         iframe?.contentDocument?.querySelector('body').setAttribute('style', 'zoom: ' + ((iframe?.clientWidth - 50) / pageRef.clientWidth).toFixed(3))
       }
       // this.formInfo.patchValue(this.dimension, {emitEvent: false})
@@ -109,9 +130,8 @@ export class EditFileComponent implements OnInit, AfterViewInit {
   }
 
 
-
   submitFile() {
-    if(this.formInfo.invalid && this.type != 'admin-edit') {
+    if (this.formInfo.invalid && this.type != 'admin-edit') {
       this.formInfo.markAllAsTouched()
       return
     }
@@ -121,11 +141,14 @@ export class EditFileComponent implements OnInit, AfterViewInit {
     const doc = parser.parseFromString(content, 'text/html');
     doc.querySelector('#mark-editor').remove()
     doc.querySelector('body').removeAttribute('style')
-    const pdfBlob = new Blob([new XMLSerializer().serializeToString(doc)], { type: 'application/html' });
+    const pdfBlob = new Blob([new XMLSerializer().serializeToString(doc)], {type: 'application/html'});
     const formData = new FormData()
     formData.append('file', pdfBlob)
-    if(this.type == 'admin-edit') {
+    if (this.type == 'admin-edit') {
       formData.append('id', this.fileInfo.id)
+      formData.append('name', `${this.formInfo.value.name}`)
+      formData.append('height', `${this.formInfo.value.height}`)
+      formData.append('width', `${this.formInfo.value.width}`)
       this.appService.updateFile(formData, this.fileInfo.id)
         .pipe(finalize(() => this.uploading = false))
         .subscribe(

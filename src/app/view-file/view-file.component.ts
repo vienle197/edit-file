@@ -37,10 +37,16 @@ export class ViewFileComponent implements OnInit, AfterViewInit {
 
   setDimensionDefault() {
     try {
+      const frameView = document.querySelector('#frame-view') as HTMLDivElement
       const iframe = document.querySelector('iframe') as HTMLIFrameElement
       const pageRef = iframe?.contentDocument?.querySelector('#page-container div')
-      this.w = pageRef.clientWidth + 100
-      this.h = pageRef.clientHeight + 100
+      let zoomRate =  1
+      if(pageRef.clientWidth > frameView.clientWidth) {
+        zoomRate = Number(((frameView?.clientWidth - 50) / pageRef.clientWidth).toFixed(3))
+        iframe?.contentDocument?.querySelector('body').setAttribute('style', 'zoom: ' + ((frameView?.clientWidth - 50) / pageRef.clientWidth).toFixed(3))
+      }
+      this.w = (pageRef.clientWidth * zoomRate) + 100
+      this.h = (pageRef.clientHeight * zoomRate) + 100
     } catch (e) {
       setTimeout(() => {
         this.setDimensionDefault()
